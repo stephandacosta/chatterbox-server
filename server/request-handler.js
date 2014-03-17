@@ -5,13 +5,16 @@
  * this file and include it in basic-server.js so that it actually works.
  * *Hint* Check out the node module documentation at http://nodejs.org/api/modules.html. */
 
-var handleRequest = function(request, response) {
+exports.handleRequest = function(request, response) {
   /* the 'request' argument comes from nodes http module. It includes info about the
   request - such as what URL the browser is requesting. */
 
   /* Documentation for both request and response can be found at
    * http://nodemanual.org/0.8.14/nodejs_ref_guide/http.html */
+  // console.log(request);
 
+  var method = request.headers['access-control-request-method'] //gives us the GET and POST
+  
   console.log("Serving request type " + request.method + " for url " + request.url);
 
   var statusCode = 200;
@@ -22,6 +25,7 @@ var handleRequest = function(request, response) {
 
   headers['Content-Type'] = "text/plain";
 
+
   /* .writeHead() tells our server what HTTP status code to send back */
   response.writeHead(statusCode, headers);
 
@@ -29,7 +33,8 @@ var handleRequest = function(request, response) {
    * anything back to the client until you do. The string you pass to
    * response.end() will be the body of the response - i.e. what shows
    * up in the browser.*/
-  response.end("Hello, World!");
+   
+  response.end("Hello World Will!");
 };
 
 /* These headers will allow Cross-Origin Resource Sharing (CORS).
