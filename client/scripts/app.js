@@ -15,15 +15,17 @@ $.ajax({
   data: JSON.stringify(message),
   contentType: 'application/json',
   success: function (data) {
+    ourData = data;
+    ourDataparsed = JSON.parse(data);
       var user;
       var line;
       var rooms = {};
       //this part for our chat lines and room counter
-    for (var i = 0; i < data.results.length; i++) {
+    for (var i = 0; i < ourDataparsed.results.length; i++) {
       //console.log(data.results);
-      username = data.results[i]["username"];
-      line = data.results[i]["text"];
-      room = data.results[i]["roomname"];
+      username = ourDataparsed.results[i]["username"];
+      line = ourDataparsed.results[i]["text"];
+      room = ourDataparsed.results[i]["roomname"];
 
 
       //objectId = data.results[i]["objectId"];
@@ -131,7 +133,7 @@ $.ajax({
   }
 });
 }
-//getChat();
+getChat();
 
 function refresh() {
  console.log('hey!');

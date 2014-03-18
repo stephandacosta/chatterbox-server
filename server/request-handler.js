@@ -28,6 +28,9 @@ exports.handleRequest = function(request, response) {
   var urlMessage = require("url");
   var http = require("http");
   var qs = require('querystring');
+
+  var objContainer = [];
+
   var method = request.headers['access-control-request-method']; //gives us the GET and POST
   // console.log('request header :' , method);
   if (request.method === 'OPTIONS') {
@@ -36,7 +39,23 @@ exports.handleRequest = function(request, response) {
 
   if (request.method === 'GET') {
     // console.log('get method');
+    // We need to add in options for sending back objects based on requested URL
+    // console.log("THIS IS WHAT WE WANT:" + request.url + " END ");
+    //
+    var testObject = {results : [{
+      createdAt : "2013-10-07T16:22:03.280Z",
+      objectId : "teDOY3Rnpe",
+      roomname : "lobby",
+      text : "hello",
+      updatedAt : "2013-10-07T16:22:03.280Z",
+      username : "gary"
+    }]};
+
+    response.end(JSON.stringify(testObject));
+
+
   } 
+
 
   if (request.method === 'POST') {
 
@@ -47,8 +66,10 @@ exports.handleRequest = function(request, response) {
     });
 
     request.on('end', function(chunk){
-    console.log('parsed result: ' + qs.parse(result).text);
+    // console.log('parsed result: ' + qs.parse(result).text);
+    objContainer.push(qs.parse(result));
     });
+
 
   } 
 
@@ -60,7 +81,7 @@ exports.handleRequest = function(request, response) {
    * response.end() will be the body of the response - i.e. what shows
    * up in the browser.*/
    
-  response.end("Hello World Will!");
+  response.end(JSON.stringify(testObject));
 };
 
 /* These headers will allow Cross-Origin Resource Sharing (CORS).
