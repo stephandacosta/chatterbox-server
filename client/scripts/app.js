@@ -120,7 +120,7 @@ $.ajax({
   // always use this url
   url: 'http://localhost:3000/1/classes/chatterbox',
   type: 'POST',
-  data: JSON.stringify(message),
+  data: message,
   contentType: 'application/json',
   success: function (data) {
     console.log('chatterbox: Message sent');
@@ -131,7 +131,7 @@ $.ajax({
   }
 });
 }
-getChat();
+//getChat();
 
 function refresh() {
  console.log('hey!');

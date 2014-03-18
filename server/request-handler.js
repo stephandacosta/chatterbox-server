@@ -9,13 +9,7 @@ exports.handleRequest = function(request, response) {
   /* the 'request' argument comes from nodes http module. It includes info about the
   request - such as what URL the browser is requesting. */
 
-  /* Documentation for both request and response can be found at
-   * http://nodemanual.org/0.8.14/nodejs_ref_guide/http.html */
-  // console.log(request);
-
-  var method = request.headers['access-control-request-method'] //gives us the GET and POST
-  
-  console.log("Serving request type " + request.method + " for url " + request.url);
+  console.log("Serving request type " + request.method + "with request header " + request.headers['access-control-request-method'] + " for url " + request.url);
 
   var statusCode = 200;
 
@@ -28,6 +22,38 @@ exports.handleRequest = function(request, response) {
 
   /* .writeHead() tells our server what HTTP status code to send back */
   response.writeHead(statusCode, headers);
+  /* Documentation for both request and response can be found at
+   * http://nodemanual.org/0.8.14/nodejs_ref_guide/http.html */
+  
+  var urlMessage = require("url");
+  var http = require("http");
+  var qs = require('querystring');
+  var method = request.headers['access-control-request-method']; //gives us the GET and POST
+  // console.log('request header :' , method);
+  if (request.method === 'OPTIONS') {
+    // console.log('options method');
+  } 
+
+  if (request.method === 'GET') {
+    // console.log('get method');
+  } 
+
+  if (request.method === 'POST') {
+
+    var result = '';
+    request.on('data', function(chunk){
+      // console.log(chunk);
+      result += chunk;
+    });
+
+    request.on('end', function(chunk){
+    console.log('parsed result: ' + qs.parse(result).text);
+    });
+
+  } 
+
+  
+
 
   /* Make sure to always call response.end() - Node will not send
    * anything back to the client until you do. The string you pass to
@@ -48,3 +74,6 @@ var defaultCorsHeaders = {
   "access-control-allow-headers": "content-type, accept",
   "access-control-max-age": 10 // Seconds.
 };
+    // console.log("*******************this is the request ****************"); 
+    // console.log(request);
+    // console.log("*******************this was the request ****************"); 
