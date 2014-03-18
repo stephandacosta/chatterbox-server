@@ -4,6 +4,7 @@
  * You'll have to figure out a way to export this function from
  * this file and include it in basic-server.js so that it actually works.
  * *Hint* Check out the node module documentation at http://nodejs.org/api/modules.html. */
+  var objContainer = [];
 
 exports.handleRequest = function(request, response) {
   /* the 'request' argument comes from nodes http module. It includes info about the
@@ -29,7 +30,6 @@ exports.handleRequest = function(request, response) {
   var http = require("http");
   var qs = require('querystring');
 
-  var objContainer = [];
 
   var method = request.headers['access-control-request-method']; //gives us the GET and POST
   // console.log('request header :' , method);
@@ -42,14 +42,16 @@ exports.handleRequest = function(request, response) {
     // We need to add in options for sending back objects based on requested URL
     // console.log("THIS IS WHAT WE WANT:" + request.url + " END ");
     //
-    var testObject = {results : [{
-      createdAt : "2013-10-07T16:22:03.280Z",
-      objectId : "teDOY3Rnpe",
-      roomname : "lobby",
-      text : "hello",
-      updatedAt : "2013-10-07T16:22:03.280Z",
-      username : "gary"
-    }]};
+    // var testObject = {results : [{
+    //   createdAt : "2013-10-07T16:22:03.280Z",
+    //   objectId : "teDOY3Rnpe",
+    //   roomname : "lobby",
+    //   text : "hello",
+    //   updatedAt : "2013-10-07T16:22:03.280Z",
+    //   username : "gary"
+    // }]};
+
+    var testObject = {results : objContainer};
 
     response.end(JSON.stringify(testObject));
 
@@ -68,6 +70,7 @@ exports.handleRequest = function(request, response) {
     request.on('end', function(chunk){
     // console.log('parsed result: ' + qs.parse(result).text);
     objContainer.push(qs.parse(result));
+    console.log('objContainer length :', objContainer.length);
     });
 
 
