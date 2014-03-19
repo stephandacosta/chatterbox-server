@@ -1,9 +1,8 @@
-var urlMessage = require("url");
 var http = require("http");
-var qs = require('querystring');
 var objContainer = [];
+var responseObj;
 
-var sendResponse = function(response, status, responseObj) {
+exports.sendResponse = sendResponse = function(response, status, responseObj) {
   var headers = {
     "Content-Type" : "application/json",
     "access-control-allow-origin": "*",
@@ -16,28 +15,18 @@ var sendResponse = function(response, status, responseObj) {
 };
 
 
-exports.handleRequest = function(request, response) {
+exports.handleChatRequest = function(request, response) {
 
   console.log("Serving request type " + request.method + " for url " + request.url);
 
-  if (request.url !== "/classes/messages"){
-    sendResponse(response, 404, {});
-  }
 
   if (request.method === 'OPTIONS') {
+    responseObj = {results : objContainer};
     sendResponse(response, 200, {});
   }
 
   if (request.method === 'GET') {
-    // var testObject = {results : [{
-    //   createdAt : "2013-10-07T16:22:03.280Z",
-    //   objectId : "teDOY3Rnpe",
-    //   roomname : "lobby",
-    //   text : "hello",
-    //   updatedAt : "2013-10-07T16:22:03.280Z",
-    //   username : "gary"
-    // }]};
-    var responseObj = {results : objContainer};
+    responseObj = {results : objContainer};
     sendResponse(response, 200, responseObj);
   }
 
