@@ -6,13 +6,12 @@ var localFileHandler = require ("./local-file-handler.js");
 var port = 3000;
 var ip = "127.0.0.1";
 
-
+// lookup object
 var routingSwitch = {
   "/1/classes/chatterbox" : requestHandler.handleChatRequest,
   "/classes/messages" : requestHandler.sendResponse,
   "/" : localFileHandler.serveFile
 };
-
 
 var routing = function(request, response) {
   console.log("handling type " + request.url);

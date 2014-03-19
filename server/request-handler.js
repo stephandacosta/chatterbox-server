@@ -14,7 +14,6 @@ exports.sendResponse = sendResponse = function(response, status, responseObj) {
   response.end(JSON.stringify(responseObj));
 };
 
-
 exports.handleChatRequest = function(request, response) {
 
   console.log("Serving request type " + request.method + " for url " + request.url);
